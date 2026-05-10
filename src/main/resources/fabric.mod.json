@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "mamelaos-seedchecker",
+	"version": "${version}",
+	"name": "Mamelao's seedchecker",
+	"description": "This mod loads a list of seeds that you can cycle through to check them faster",
+	"authors": [
+		"mamelao"
+	],
+	"contact": {
+		"homepage": "https://www.youtube.com/@Mamelao661",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/mamelaos-seedchecker/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.mamelao.seedchecker.MamelaosSeedchecker"
+		],
+		"client": [
+			"me.mamelao.seedchecker.MamelaosSeedcheckerClient"
+		],
+		"fabric-datagen": [
+			"me.mamelao.seedchecker.MamelaosSeedcheckerDataGenerator"
+		]
+	},
+	"mixins": [
+		"mamelaos-seedchecker.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~1.19.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
