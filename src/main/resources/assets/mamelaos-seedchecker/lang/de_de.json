@@ -1,4 +1,6 @@
 {
   "key.category.mamelaos-seedchecker.seedchecker": "Die Tasten \"Seedchecker\"",
-  "key.mamelaos-seedchecker.next_seed": "Lade den nächsten Seed"
+  "key.mamelaos-seedchecker.next_seed": "Lade den nächsten Seed",
+  "key.mamelaos-seedchecker.no_seeds": "NOT TRANSLATED",
+  "key.mamelaos-seedchecker.load_next": "NOT TRANSLATED"
 }

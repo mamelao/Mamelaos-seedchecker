@@ -1,4 +1,6 @@
 {
   "key.category.mamelaos-seedchecker.seedchecker": "Seedchecker Keys",
-  "key.mamelaos-seedchecker.next_seed": "Load next seed"
+  "key.mamelaos-seedchecker.next_seed": "Load next seed",
+  "key.mamelaos-seedchecker.no_seeds": "No seeds left!",
+  "key.mamelaos-seedchecker.load_next": "Loading next seed..."
 }

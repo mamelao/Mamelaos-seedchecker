@@ -1,12 +1,11 @@
 package me.mamelao.seedchecker.event;
 
-import me.mamelao.seedchecker.MamelaosSeedcheckerClient;
+import me.mamelao.seedchecker.WorldLoader;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyInputHandler {
@@ -18,11 +17,9 @@ public class KeyInputHandler {
     public static void registerKeyBindings() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (nextSeedKey.wasPressed()) {
-                // Load next world, not yet implemented
                 var player  = MinecraftClient.getInstance().player;
                 if (player == null) { return; }
-                MinecraftClient.getInstance().player.sendMessage(Text.literal("Hello!, loading world not implemented yet :("), false);
-                MamelaosSeedcheckerClient.quitWorld();
+                WorldLoader.loadNextWorld(client, WorldLoader.nextSeed());
             }
         });
     }
