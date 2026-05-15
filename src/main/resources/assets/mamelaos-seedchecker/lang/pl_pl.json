@@ -1,6 +1,6 @@
 {
   "key.category.mamelaos-seedchecker.seedchecker": "Klawisze \"Seedchecker\"",
   "key.mamelaos-seedchecker.next_seed": "Załaduj następnego seeda",
-  "key.mamelaos-seedchecker.no_seeds": "Brak seedów!",
-  "key.mamelaos-seedchecker.load_next": "Ładowanie następnego seeda..."
+  "mamelaos-seedchecker.no_seeds": "Brak seedów!",
+  "mamelaos-seedchecker.load_next": "Ładowanie następnego seeda..."
 }

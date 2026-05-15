@@ -34,6 +34,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.concurrent.CompletableFuture;
 
 import static com.mojang.text2speech.Narrator.LOGGER;
@@ -44,7 +45,8 @@ public class WorldLoader {
             MinecraftClient client,
             long seed
     ){
-        quitWorld("key.mamelaos-seedchecker.load_next");
+        quitWorld();
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -207,7 +209,7 @@ public class WorldLoader {
     record WorldCreationSettings(WorldGenSettings worldGenSettings, DataConfiguration dataConfiguration) {
     }
 
-    public static void quitWorld(String text) {
+    public static void quitWorld() {
         MinecraftClient client =
                 MinecraftClient.getInstance();
 
@@ -215,17 +217,13 @@ public class WorldLoader {
 
             client.world.disconnect();
 
-            client.disconnect(
-                    new MessageScreen(
-                            Text.translatable(text)
-                    )
-            );
+            client.disconnect();
         }
     }
 
     private static final Logger logger = LoggerFactory.getLogger(WorldLoader.class);
 
-    public static synchronized long nextSeed() {
+    public static synchronized OptionalLong nextSeed() {
         Path path = Paths.get("config/seeds.txt");
         logger.info(
                 "Looking for seeds file at (nextSeed): {}",
@@ -238,7 +236,7 @@ public class WorldLoader {
 
             if (lines.isEmpty()) {
                 logger.warn("Plik z seedami jest pusty! (nextSeed)");
-                return 1;
+                return OptionalLong.empty();
             }
 
             // 2. Pobierz pierwszy seed
@@ -256,7 +254,7 @@ public class WorldLoader {
             Files.write(path, remainingLines);
 
             logger.info("Pobrano seed: " + seed + ". Pozostało w pliku: " + remainingLines.size());
-            return seed;
+            return OptionalLong.of(seed);
 
         } catch (IOException e) {
             logger.error("Błąd podczas operacji na pliku seeds.txt: (nextSeed)", e);
@@ -265,8 +263,6 @@ public class WorldLoader {
 
         }
 
-        throw new RuntimeException(
-                "Failed to load next seed"
-        );
+        return OptionalLong.empty();
     }
 }
