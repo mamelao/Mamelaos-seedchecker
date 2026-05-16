@@ -220,11 +220,57 @@ public class WorldLoader {
             client.disconnect();
         }
     }
-
     private static final Logger logger = LoggerFactory.getLogger(WorldLoader.class);
 
+    public static void runCommandsFromFile() {
+
+        MinecraftClient client =
+                MinecraftClient.getInstance();
+
+        Path path =
+                Paths.get("config/mamelaos-seedchecker/commands.txt");
+
+        try {
+
+            List<String> lines =
+                    Files.readAllLines(path);
+
+            for (String line : lines) {
+
+                line = line.trim();
+
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                logger.info(
+                        "Running command: {}",
+                        line
+                );
+
+                String command = line;
+
+                client.execute(() -> {
+
+                    if (client.player != null) {
+
+                        client.player.networkHandler
+                                .sendChatCommand(command);
+                    }
+                });
+            }
+
+        } catch (IOException e) {
+
+            logger.error(
+                    "Failed to read commands.txt",
+                    e
+            );
+        }
+    }
+
     public static synchronized OptionalLong nextSeed() {
-        Path path = Paths.get("config/seeds.txt");
+        Path path = Paths.get("config/mamelaos-seedchecker/seeds.txt");
         logger.info(
                 "Looking for seeds file at (nextSeed): {}",
                 path.toAbsolutePath()
