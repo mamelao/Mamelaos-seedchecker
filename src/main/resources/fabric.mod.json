@@ -33,5 +33,11 @@
 		"minecraft": "~1.19.4",
 		"java": ">=17",
 		"fabric-api": "*"
+	},
+	"custom": {
+		"mc-publish": {
+			"modrinth": "DXN2IyMB",
+			"curseforge": 1546078
+		}
 	}
 }

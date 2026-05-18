@@ -7,6 +7,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +17,16 @@ public class MamelaosSeedcheckerClient  implements ClientModInitializer {
     private static final Logger logger = LoggerFactory.getLogger(MamelaosSeedcheckerClient.class);
     @Override
     public void onInitializeClient() {
+        Path path = Path.of("config", "mamelaos-seedchecker");
         KeyInputHandler.register();
+        try {
+            Files.createDirectories(path);
+            // Log successful creation with structured placeholders
+            logger.info("Directory ready at: {}", path.toAbsolutePath());
+        } catch (IOException e) {
+            // Log the exception properly with a message and the stack trace
+            logger.error("Failed to create directory structure for path: {}", path, e);
+        }
         File file1 = new File("config/mamelaos-seedchecker/commands.txt");
         try {
             if (file1.createNewFile()) {
