@@ -31,17 +31,17 @@ public class MamelaosSeedcheckerClient  implements ClientModInitializer {
         try {
             if (file1.createNewFile()) {
                 System.out.println("File created: " + file1.getName());
+                try (FileWriter writer = new FileWriter("config/mamelaos-seedchecker/commands.txt")) {
+                    writer.write("tellraw @a \"Hello! go to .minecraft/config/mamelaos-seedchecker/commands.txt to get rid of/edit this\"\n");
+                    writer.write("tellraw @a \"If you are typing a command, you need to type it in without a slash\"\n");
+                    writer.write("tellraw @a [\"I also recommend using \",{\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://mcstacker.net\"},\"color\":\"yellow\",\"text\":\"mcstacker.net\"}]");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    logger.error("An error occurred.", e);
+                }
             } else {
                 System.out.println("File already exists.");
             }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            logger.error("An error occurred.", e);
-        }
-        try (FileWriter writer = new FileWriter("config/mamelaos-seedchecker/commands.txt")) {
-            writer.write("tellraw @a \"Hello! go to .minecraft/config/mamelaos-seedchecker/commands.txt to get rid of/edit this\"\n");
-            writer.write("tellraw @a \"If you are typing a command, you need to type it in without a slash\"\n");
-            writer.write("tellraw @a [\"I also recommend using \",{\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://mcstacker.net\"},\"color\":\"yellow\",\"text\":\"mcstacker.net\"}]");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             logger.error("An error occurred.", e);

@@ -110,7 +110,8 @@ public class WorldLoader {
                 dimensionsConfig.specialWorldProperty(),
                 combinedDynamicRegistries,
                 lifecycle3,
-                generatorOptionsHolder
+                generatorOptionsHolder,
+                seed
         );
     }
 
@@ -119,25 +120,27 @@ public class WorldLoader {
             LevelProperties.SpecialProperty specialProperty,
             CombinedDynamicRegistries<ServerDynamicRegistryType> combinedDynamicRegistries,
             Lifecycle lifecycle,
-            GeneratorOptionsHolder generatorOptionsHolder
+            GeneratorOptionsHolder generatorOptionsHolder,
+            long seed
     ) {
         client.setScreenAndRender(new MessageScreen(Text.translatable("createWorld.preparing")));
-        Optional<LevelStorage.Session> optional = WorldLoader.createSession(client);
+        Optional<LevelStorage.Session> optional = WorldLoader.createSession(client, seed);
         if (optional.isEmpty()) {
             return;
         }
         boolean bl = specialProperty == LevelProperties.SpecialProperty.DEBUG;
-        LevelInfo levelInfo = WorldLoader.createLevelInfo(bl);
+        LevelInfo levelInfo = WorldLoader.createLevelInfo(bl, seed);
         LevelProperties saveProperties = new LevelProperties(levelInfo, generatorOptionsHolder.generatorOptions(), specialProperty, lifecycle);
         client.createIntegratedServerLoader().start(optional.get(), generatorOptionsHolder.dataPackContents(), combinedDynamicRegistries, saveProperties);
     }
 
     private static LevelInfo createLevelInfo(
-            boolean debugWorld
+            boolean debugWorld,
+            long seed
     ) {
 
         String worldName =
-                "seed_" + System.currentTimeMillis();
+                "seed_" + seed;
 
         if (debugWorld) {
 
@@ -169,10 +172,11 @@ public class WorldLoader {
     }
 
     private static Optional<LevelStorage.Session> createSession(
-            MinecraftClient client
+            MinecraftClient client,
+            long seed
     ) {
         String worldName =
-                "seed_" + System.currentTimeMillis();
+                "seed_" + seed;
         try {
             return Optional.of(
                     client.getLevelStorage()

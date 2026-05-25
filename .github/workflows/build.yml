@@ -21,6 +21,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Clean Gradle cache
+        run: ./gradlew clean
+
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
